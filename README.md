@@ -1,12 +1,11 @@
 
 
-# source
-This repo fork from @meowwolf/node-red-contrib-amqp
+# Source
+This repo fork from @stormpass/node-red-contrib-amqp
 
 and
 
-+ upgrade amqplib so you can use it with node10+
-+ fixed direct routing publish issues;
++ correct a bug where there is no reconnection on error
 
 AMQP nodes for node-red
 
@@ -15,7 +14,7 @@ AMQP nodes for node-red
 Install via the Palette Manager or from within your node-red directory (typically `~/.node-red`) run:
 
 ```
-npm i @stormpass/node-red-contrib-amqp
+npm i @corentin-pasquier/node-red-contrib-amqp
 ```
 
 ## Usage
