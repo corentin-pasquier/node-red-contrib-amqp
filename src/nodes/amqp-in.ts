@@ -30,11 +30,13 @@ module.exports = function (RED: NodeRedApp): void {
         })
 
       try {
+        self.log('AMQP Connection attempt')
         const connection = await amqp.connect()
+        self.log('AMQP Connection ok!')
 
         // istanbul ignore else
         if (connection) {
-          await amqp.initialize()
+          const channel = await amqp.initialize()
           await amqp.consume()
 
           // When the node is re-deployed
@@ -45,6 +47,15 @@ module.exports = function (RED: NodeRedApp): void {
 
           // When the server goes down
           connection.on('close', async e => {
+            e && (await reconnect())
+          })
+
+          // When the server goes down
+          connection.on('error', async e => {
+            e && (await reconnect())
+          })
+
+          channel.on('error', async (e) => {
             e && (await reconnect())
           })
 
